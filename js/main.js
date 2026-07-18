@@ -4,14 +4,23 @@ document.addEventListener('DOMContentLoaded', function () {
   var links = document.querySelector('.nav-links');
   if (toggle && links) {
     toggle.addEventListener('click', function () {
-      toggle.classList.toggle('is-open');
+      var isOpen = toggle.classList.toggle('is-open');
       links.classList.toggle('is-open');
+      document.body.classList.toggle('nav-locked', isOpen);
     });
     links.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
         toggle.classList.remove('is-open');
         links.classList.remove('is-open');
+        document.body.classList.remove('nav-locked');
       });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && links.classList.contains('is-open')) {
+        toggle.classList.remove('is-open');
+        links.classList.remove('is-open');
+        document.body.classList.remove('nav-locked');
+      }
     });
   }
 
